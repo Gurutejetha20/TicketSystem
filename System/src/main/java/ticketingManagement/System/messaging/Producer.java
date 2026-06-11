@@ -21,7 +21,6 @@ public class Producer {
 	        while (retry < 3) {
 	            try {
 	                jmsTemplate.convertAndSend("ticket.events", msg);
-//	            	throw new RuntimeException("Test failure");
 	                return;
 	            } catch (Exception e) {
 	                retry++;

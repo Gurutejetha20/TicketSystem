@@ -2,10 +2,8 @@ package ticketingManagement.System.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import ticketingManagement.System.util.LocalDateTimeAdapter;
 
 @Entity
@@ -34,67 +32,38 @@ public class Ticket {
     private String status = "OPEN";
 
     @Column
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class) // ✅ Adapter connected here
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime submittedAt;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(updatable = false)
+    @XmlTransient
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Long getCustomerId() {
-        return customerId;
-    }
+    @Column
+    @XmlTransient
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public String getIssueType() {
-        return issueType;
-    }
+    public Long getId() { return id; }
+    public Long getCustomerId() { return customerId; }
+    public String getIssueType() { return issueType; }
+    public String getPriority() { return priority; }
+    public String getDescription() { return description; }
+    public String getStatus() { return status; }
+    public LocalDateTime getSubmittedAt() { return submittedAt; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
 
-    public String getPriority() {
-        return priority;
-    }
+    public void setId(Long id) { this.id = id; }
+    public void setCustomerId(Long customerId) { this.customerId = customerId; }
+    public void setIssueType(String issueType) { this.issueType = issueType; }
+    public void setPriority(String priority) { this.priority = priority; }
+    public void setDescription(String description) { this.description = description; }
+    public void setStatus(String status) { this.status = status; }
+    public void setSubmittedAt(LocalDateTime submittedAt) { this.submittedAt = submittedAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public LocalDateTime getSubmittedAt() {
-        return submittedAt;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
-    public void setIssueType(String issueType) {
-        this.issueType = issueType;
-    }
-
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setSubmittedAt(LocalDateTime submittedAt) {
-        this.submittedAt = submittedAt;
-    }
-
-    public Ticket() {
-    }
+    public Ticket() {}
 
     public Ticket(Long customerId, String issueType, String priority,
                   String description, String status, LocalDateTime submittedAt) {
@@ -108,12 +77,9 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket [id=" + id +
-                ", customerId=" + customerId +
-                ", issueType=" + issueType +
-                ", priority=" + priority +
-                ", description=" + description +
-                ", status=" + status +
+        return "Ticket [id=" + id + ", customerId=" + customerId +
+                ", issueType=" + issueType + ", priority=" + priority +
+                ", description=" + description + ", status=" + status +
                 ", submittedAt=" + submittedAt + "]";
     }
 }
